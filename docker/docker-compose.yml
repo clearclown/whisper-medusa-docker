@@ -1,0 +1,19 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  whisper-medusa:
+    build: .
+    volumes:
+      - ./src:/app/src
+      - ./audio:/app/audio
+      - ./.env:/app/.env
+    env_file:
+      - .env
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
